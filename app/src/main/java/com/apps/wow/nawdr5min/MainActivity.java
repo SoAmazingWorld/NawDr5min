@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_news).withIcon(FontAwesome.Icon.faw_hacker_news),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_news).withIcon(FontAwesome.Icon.faw_newspaper_o),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_apps).withIcon(FontAwesome.Icon.faw_android).withBadge("6").withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_games).withIcon(FontAwesome.Icon.faw_gamepad),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_videos).withIcon(FontAwesome.Icon.faw_youtube),

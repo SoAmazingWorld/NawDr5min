@@ -11,8 +11,69 @@
     card_view:cardUseCompatPadding="true"
     card_view:contentPadding="8dp">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/articleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_bgr">
 
+        <ImageView
+            android:id="@+id/stgvImageView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/siteurl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/stgvImageView"
+            android:layout_alignRight="@+id/stgvImageView"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:visibility="gone"
+            android:layout_below="@+id/stgvImageView" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_alignLeft="@+id/stgvImageView"
+            android:layout_alignRight="@+id/stgvImageView"
+            android:layout_alignTop="@+id/stgvImageView"
+            android:background="@drawable/main_adapter_tagbgr" />
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stgvImageView"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingLeft="6dp"
+            android:paddingTop="16dp">
 
+            <TextView
+                android:id="@+id/articleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="8dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@drawable/main_adapter_textselector"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/pubDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/gray_text" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

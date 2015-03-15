@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by Alexandr on 13.02.2015.
  */
-public class ClassItem {
+public class PostItem {
     private String logo;
     private String title;
     private String link;

@@ -19,6 +19,12 @@ import com.androidquery.callback.AjaxStatus;
 import com.androidquery.util.AQUtility;
 import com.androidquery.util.XmlDom;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,13 +43,13 @@ import java.util.Locale;
  */
 public class HomePage extends Fragment  {
 
-    private final String[] FEEDS = new String[]{"http://droider.ru/feed/"};
+    private final String[] FEEDS = new String[]{"http://droider.ru"};
     private AQuery aq;
     private RecyclerView gridView;
     private StaggeredGridLayoutManager mLayoutManager;
     private AdapterMain adapter;
     //private SwipeRefreshLayout swipeRefreshLayout;
-    private ArrayList<ClassItem> items = new ArrayList<>();
+    private ArrayList<PostItem> items = new ArrayList<>();
     private DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zz", Locale.ENGLISH);
 
     public HomePage()
@@ -81,16 +87,45 @@ public class HomePage extends Fragment  {
         items.clear();
         Toast.makeText(getActivity(),"Обновлено" , Toast.LENGTH_SHORT ).show();
         for(String feed:FEEDS){
-            request(feed);
+            //request(feed);
+            updateFeeds(feed);
         }
     }
 
-
+    @Deprecated
     public void request(String url) {
         aq.ajax(url, XmlDom.class,this,"onRequest");
 
     }
 
+    public void updateFeeds(String uri){
+        try {
+            Document page = Jsoup.connect(uri).get();
+            Elements posts = page.select("div[id^=post]");
+            for  (Element post: posts)
+            {
+                items.add(new PostItem().setTitle(post.select("a[title]").first().text())
+                                        .setLink (post.select("a[href]").first().text())
+                                        .setImg  (post.select("img[src]").text())
+                                        .setDescription(post.select("div[class=entry]").text())
+                                        .setDate (post.select("span[class=category] > span").text())
+                                        .setCategories (post.select("a[rel=category tag]"))
+                );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Collections.sort(items, new Comparator<PostItem>() {
+            public int compare(PostItem o1, PostItem o2) {
+                if (o1.getDate() == null || o2.getDate() == null)
+                    return 0;
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+    @Deprecated
     public void onRequest(String url,XmlDom xml, AjaxStatus status) {
         if (status.getCode()==200) {
             String logo = "";
@@ -104,7 +139,7 @@ public class HomePage extends Fragment  {
             List<XmlDom> xmlItems = xml.tags("item");
 
             for(XmlDom xmlItem: xmlItems){
-                ClassItem item = new ClassItem();
+                PostItem item = new PostItem();
                 String description = xmlItem.tag("description").text();
 
                 item.setTitle(xmlItem.tag("title").text());
@@ -133,8 +168,8 @@ public class HomePage extends Fragment  {
                 item.setImg(src);
                 items.add(item);
             }
-            Collections.sort(items, new Comparator<ClassItem>() {
-                public int compare(ClassItem o1, ClassItem o2) {
+            Collections.sort(items, new Comparator<PostItem>() {
+                public int compare(PostItem o1, PostItem o2) {
                     if (o1.getDate() == null || o2.getDate() == null)
                         return 0;
                     return o2.getDate().compareTo(o1.getDate());

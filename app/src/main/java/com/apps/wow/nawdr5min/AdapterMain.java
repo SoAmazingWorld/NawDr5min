@@ -3,6 +3,7 @@ package com.apps.wow.nawdr5min;
 /**
  * Created by Alexandr on 23.02.2015.
  */
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.androidquery.AQuery;
 
 import java.text.DateFormat;
@@ -24,12 +26,12 @@ import java.util.Locale;
 
 public class AdapterMain extends RecyclerView.Adapter<AdapterMain.ViewHolder> {
 
-    private ArrayList<ClassItem> data;
+    private ArrayList<PostItem> data;
     private AQuery aq;
     private Activity activity;
     private DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Locale.getDefault());
 
-    public AdapterMain(Activity activity,ArrayList<ClassItem> data) {
+    public AdapterMain(Activity activity,ArrayList<PostItem> data) {
         this.activity = activity;
         this.data = data;
         aq = new AQuery(activity);
@@ -64,7 +66,7 @@ public class AdapterMain extends RecyclerView.Adapter<AdapterMain.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        ClassItem item = data.get(i);
+        PostItem item = data.get(i);
         aq.id(viewHolder.articleTitle).text(item.getTitle());
         aq.id(viewHolder.siteurl).text(item.getLink());
         aq.id(viewHolder.pubDate).text(formatter.format(item.getDate()));
